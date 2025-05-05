@@ -1,32 +1,80 @@
-Proje Adı: Şarkı Sözleri Tematik Analiz ve Vektörleştirme
+Giriş
 
-1. Proje Hakkında
-Bu proje, Türkçe şarkı sözlerini analiz etmek ve bu metinleri doğal dil işleme (NLP) yöntemleri kullanarak vektörleştirmek amacıyla geliştirilmiştir. Proje, şarkı sözlerinden tematik benzerlikleri ve kelime ilişkilerini incelemeyi hedefler. Yapılan işlemler arasında veri toplama, ön işleme (pre-processing), lemmatization ve stemming, vektörleştirme (TF-IDF ve Word2Vec) ve model eğitimi bulunmaktadır.
+Bu proje, metin tabanlı veriler üzerinde doğal dil işleme (NLP) teknikleri kullanarak çeşitli yapay zekâ modelleri geliştirmeyi amaçlamaktadır. Projede, veri indirme, ön işleme, vektörleştirme ve Word2Vec modelleri gibi adımlar uygulanacaktır.
 
-2. Projenin Amacı ve Kullanım Alanı
-Bu proje, metin madenciliği ve doğal dil işleme tekniklerini kullanarak şarkı sözleri arasındaki benzerlikleri keşfetmek ve analiz etmeyi amaçlamaktadır. Proje, müzik analistleri, metin analistleri, araştırmacılar ve NLP alanında çalışanlar için faydalı olabilir. Kullanıcılar, bu projeyi farklı metin verileriyle de kullanarak benzer analizler yapabilir.
+Veri Seti Seçimi
+Veri seti, Genius API üzerinden alınan Türkçe şarkı sözlerinden oluşmaktadır. Bu veri seti, şarkı sözlerinde tematik benzerlik ölçümü yapmak amacıyla kullanılacaktır.
 
-3. Proje İçeriği
-Veri Toplama: Genius API kullanılarak şarkı sözleri verisi toplanmıştır.
-Ön İşleme (Pre-Processing): Veri temizleme adımları (stop word removal, tokenization, lemmatization, stemming) uygulanmıştır.
-Vektörleştirme: TF-IDF ve Word2Vec vektörleştirme yöntemleri uygulanmıştır.
-Model Eğitim ve Değerlendirme: Word2Vec ve TF-IDF modelleri eğitilmiş ve sonuçlar karşılaştırılmıştır.
-4. Gerekli Kütüphaneler ve Kurulum Talimatları
-Bu projede kullanılan kütüphanelerin kurulumu için aşağıdaki adımları izleyebilirsiniz:
+Kurulum
 
-a. Gerekli Kütüphaneler:
+Proje, aşağıdaki Python kütüphanelerine gereksinim duyar:
 
+gensim
 pandas
 nltk
-gensim
-zeyrek
-scikit-learn
+sklearn
 matplotlib
 seaborn
-requests
-6. Veri Setinin Kullanılabilirliği
-Veri Seti: Bu proje için kullanılan şarkı sözleri veri seti, şarkıcılar ve şarkı isimleriyle birlikte Genius API'den toplanmıştır.
-Kullanım Amacı: Veri seti, şarkı sözleri arasındaki benzerlikleri analiz etmek, kelimelerin anlamlarını öğrenmek ve metin madenciliği çalışmaları yapmak için kullanılabilir. Ayrıca, NLP alanında deneysel çalışmalar yapmak isteyen araştırmacılar veya geliştiriciler için faydalıdır.
-7. Modelin Değerlendirilmesi
-Modelin doğruluğu, kullanılan veri setine ve uygulanan tekniklere bağlıdır. Burada, TF-IDF ve Word2Vec yöntemlerinin her ikisi de metin madenciliği için kullanışlıdır ve projede farklı amaçlar için kullanılabilir. Modelin başarısını değerlendirmek için vektörlerin benzerlikleri ve doğruluk oranları gözlemlenebilir.
+Kurulum için aşağıdaki komutu kullanabilirsiniz:
+
+pip install gensim pandas nltk sklearn matplotlib seaborn
+Veri Seti
+
+Kaynak: Veri seti Genius API üzerinden alınmıştır.
+Boyut: Veri seti 721 Türkçe şarkı sözünden oluşmaktadır.
+Format: JSON formatında indirilmiştir.
+Örnek Veri
+Örnek bir şarkı sözü:
+
+{
+    "song": "Yavaş Yavaş",
+    "lyrics": "Yavaş yavaş beni unut, çok geç olmadan, her şey geride kalsın"
+}
+Veri seti üzerinde uygulanan ön işleme adımlarında, şarkı sözlerinden önce gereksiz karakterler ve durak kelimeler (stop words) çıkarılmıştır.
+
+Uygulanan Pre-processing Adımları
+
+Veri seti üzerinde aşağıdaki ön işleme adımları uygulanmıştır:
+
+Stop Word Removal: Gereksiz ve sık kullanılan kelimeler veri setinden çıkarılmıştır.
+Tokenization: Şarkı sözleri kelimelere ayrılmıştır.
+Lowercasing: Tüm metinler küçük harfe dönüştürülmüştür.
+Lemmatization: Kelimeler kök halleriyle dönüştürülmüştür.
+Stemming: Kelimeler köklerine indirgenmiştir.
+Özel karakter temizliği: HTML etiketleri ve diğer özel karakterler temizlenmiştir.
+Veri Seti Çıktıları
+
+Temizlenmiş veri seti iki ayrı CSV dosyası olarak kaydedilmiştir:
+lemmatized_data.csv
+stemmed_data.csv
+Bu dosyalar, GitHub repository'sinde yer almaktadır.
+Zipf Yasası Analizi
+
+Veri seti üzerine Zipf Yasası uygulanarak kelime sıklıklarının log-log grafikleri çizilmiştir. Bu grafikler, veri setinin dilsel özelliklerini ve kelime sıklığının dağılımını anlamamıza yardımcı olmuştur.
+
+Vektörleştirme
+
+Veri seti üzerinde TF-IDF ve Word2Vec yöntemleri ile vektörleştirme işlemi gerçekleştirilmiştir.
+
+A. TF-IDF Vektörleştirme
+Her iki veri seti için (lemmatized ve stemmed) TF-IDF vektörleştirme işlemi uygulanmıştır. Sonuçlar, şu şekilde kaydedilmiştir:
+
+tfidf_lemmatized.csv
+tfidf_stemmed.csv
+B. Word2Vec Vektörleştirme
+Gensim kütüphanesi kullanılarak, her iki veri seti için (lemmatized ve stemmed) toplamda 16 farklı Word2Vec modeli eğitilmiştir. Parametre setleri şu şekildedir:
+
+CBOW model, pencere boyutu: 2, vektör boyutu: 100
+Skipgram model, pencere boyutu: 2, vektör boyutu: 100
+CBOW model, pencere boyutu: 4, vektör boyutu: 100
+Skipgram model, pencere boyutu: 4, vektör boyutu: 100
+CBOW model, pencere boyutu: 2, vektör boyutu: 300
+Skipgram model, pencere boyutu: 2, vektör boyutu: 300
+CBOW model, pencere boyutu: 4, vektör boyutu: 300
+Skipgram model, pencere boyutu: 4, vektör boyutu: 300
+Her modelin eğitimi sonrası elde edilen vektör çıktıları örnek olarak raporlanmıştır. Bu örneklerde, belirli kelimelerin vektör uzayındaki en yakın anlamlı kelimeleri paylaşılmıştır.
+
+Sonuç ve Değerlendirme
+
+Projede elde edilen sonuçlar, kullanılan veri setine ve uygulanan yöntemlere dayanarak değerlendirilecektir. Her modelin başarısı, kullanılan parametreler ve model çıktılarının benzerlik oranlarına göre karşılaştırılacaktır.
 
